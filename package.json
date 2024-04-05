@@ -1,0 +1,8 @@
+{
+  "name": "task-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:felipeoriani/task-service.git",
+  "author": "Felipe Oriani <felipeoriani@gmail.com>",
+  "license": "MIT"
+}
