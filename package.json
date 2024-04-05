@@ -12,5 +12,8 @@
     "lint:fix": "eslint --fix --ext .ts .",
     "test": "glob -c \"node --import tsx --no-warnings --test\" \"tests/**/*.{spec,test}.ts\"",
     "type-check": "tsc --pretty --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.4"
   }
 }
