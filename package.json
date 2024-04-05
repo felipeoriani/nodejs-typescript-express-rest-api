@@ -4,5 +4,13 @@
   "main": "index.js",
   "repository": "git@github.com:felipeoriani/task-service.git",
   "author": "Felipe Oriani <felipeoriani@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "yarn build && node .build/src/index.js",
+    "lint": "eslint --ext .ts .",
+    "lint:fix": "eslint --fix --ext .ts .",
+    "test": "glob -c \"node --import tsx --no-warnings --test\" \"tests/**/*.{spec,test}.ts\"",
+    "type-check": "tsc --pretty --noEmit"
+  }
 }
