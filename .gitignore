@@ -1,3 +1,6 @@
+# Custom ignores
+.build
+
 # Logs
 logs
 *.log
