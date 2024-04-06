@@ -1,0 +1,19 @@
+version: '3.5'
+
+services:
+  db:
+    image: postgres:16
+    container_name: db
+    networks:
+      - default
+    environment:
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=tasks
+    ports:
+      - '5432:5432'
+
+networks:
+  default:
+    driver: bridge
+    name: task-service-network
