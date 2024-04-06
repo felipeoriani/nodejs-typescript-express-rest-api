@@ -11,7 +11,16 @@
     "lint": "eslint --ext .ts .",
     "lint:fix": "eslint --fix --ext .ts .",
     "test": "glob -c \"node --import tsx --no-warnings --test\" \"tests/**/*.{spec,test}.ts\"",
-    "type-check": "yarn build --pretty --noEmit"
+    "type-check": "yarn build --pretty --noEmit",
+    "prisma:migrate": "yarn prisma migrate dev",
+    "prisma:reset": "prisma migrate reset --force"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.12.1",
+    "express": "^4.19.2",
+    "joi": "^17.12.3",
+    "pino": "^8.20.0",
+    "pino-http": "^9.0.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
@@ -23,12 +32,5 @@
     "prisma": "^5.12.1",
     "tsx": "^4.7.2",
     "typescript": "^5.4.4"
-  },
-  "dependencies": {
-    "@prisma/client": "^5.12.1",
-    "express": "^4.19.2",
-    "joi": "^17.12.3",
-    "pino": "^8.20.0",
-    "pino-http": "^9.0.0"
   }
 }
