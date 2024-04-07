@@ -1,15 +1,17 @@
 import express from 'express'
 import routes from './routes'
 import { logger } from './core/infrastructure/logger'
-import { createExpressLogger } from './middlewares/express-logger'
-import { errorHandler } from './middlewares/express-error-handler'
+import { loggerMiddleware, errorMiddleware } from './middlewares'
+import { config } from './utils/config'
 
+const port = config.port
 const app = express()
-const port = process.env.PORT || 3000
 
-app.use(createExpressLogger())
+app.use(loggerMiddleware())
 app.use(express.json())
 app.use(routes)
-app.use(errorHandler)
+app.use(errorMiddleware)
 
-app.listen(port, () => logger.info(`Task Service running at ${port}.`))
+app.listen(port, () => {
+  logger.info(`The Task Service has started running at ${config.host}:${port} in ${config.nodeEnv} mode.`)
+})
