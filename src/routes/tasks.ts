@@ -44,7 +44,7 @@ routes.post(
 )
 
 routes.patch(
-  '/api/v1/tasks/:id/update-status',
+  '/api/v1/tasks/:id/status',
   [authenticationMiddleware, validatorMiddleware(updateStatusValidator)],
   async (req: Request, res: Response, next: NextFunction) => {
     try {
