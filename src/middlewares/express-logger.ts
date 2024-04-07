@@ -1,6 +1,6 @@
 import { pinoHttp } from 'pino-http'
 import { logger } from '../core/infrastructure/logger'
 
-export const createExpressLogger = () => {
+export const loggerMiddleware = () => {
   return pinoHttp(logger)
 }
