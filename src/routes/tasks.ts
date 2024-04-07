@@ -7,11 +7,11 @@ import {
   taskCommandValidator,
   updateStatusValidator,
 } from '../core/domain/task'
-import { validatorMiddleware } from '../middlewares/express-validator'
+import { authenticationMiddleware, validatorMiddleware } from '../middlewares'
 
 const routes = Router()
 
-routes.get('/api/v1/tasks/:id', async (req: Request, res: Response, next: NextFunction) => {
+routes.get('/api/v1/tasks/:id', authenticationMiddleware, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const taskService: TaskUseCases = new TaskService()
     const task = await taskService.getTask(req.params.id)
@@ -21,7 +21,7 @@ routes.get('/api/v1/tasks/:id', async (req: Request, res: Response, next: NextFu
   }
 })
 
-routes.get('/api/v1/tasks', async (req: Request, res: Response) => {
+routes.get('/api/v1/tasks', authenticationMiddleware, async (req: Request, res: Response) => {
   const taskService: TaskUseCases = new TaskService()
   const tasks = await taskService.getAllTasks()
 
@@ -30,7 +30,7 @@ routes.get('/api/v1/tasks', async (req: Request, res: Response) => {
 
 routes.post(
   '/api/v1/tasks',
-  validatorMiddleware(taskCommandValidator),
+  [authenticationMiddleware, validatorMiddleware(taskCommandValidator)],
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const taskService: TaskUseCases = new TaskService()
@@ -45,7 +45,7 @@ routes.post(
 
 routes.patch(
   '/api/v1/tasks/:id/update-status',
-  validatorMiddleware(updateStatusValidator),
+  [authenticationMiddleware, validatorMiddleware(updateStatusValidator)],
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const taskService: TaskUseCases = new TaskService()
@@ -61,7 +61,7 @@ routes.patch(
   }
 )
 
-routes.patch('/api/v1/tasks/:id', async (req: Request, res: Response, next: NextFunction) => {
+routes.patch('/api/v1/tasks/:id', authenticationMiddleware, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const taskService: TaskUseCases = new TaskService()
     const input = req.body as TaskCommand
@@ -73,15 +73,19 @@ routes.patch('/api/v1/tasks/:id', async (req: Request, res: Response, next: Next
   }
 })
 
-routes.delete('/api/v1/tasks/:id', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const taskService: TaskUseCases = new TaskService()
-    const id = req.params.id
-    await taskService.deleteTask(id)
-    res.status(204).send()
-  } catch (err) {
-    next(err)
+routes.delete(
+  '/api/v1/tasks/:id',
+  authenticationMiddleware,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const taskService: TaskUseCases = new TaskService()
+      const id = req.params.id
+      await taskService.deleteTask(id)
+      res.status(204).send()
+    } catch (err) {
+      next(err)
+    }
   }
-})
+)
 
 export default routes
