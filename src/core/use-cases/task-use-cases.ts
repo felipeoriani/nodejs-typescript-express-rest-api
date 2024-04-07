@@ -1,10 +1,9 @@
-import { NotFoundError, UnprocessableEntityError } from '../../utils/errors'
 import { TaskCommand, Task, TaskRepository, TaskStatus, TaskUseCases } from '../domain/task'
-import { TaskInMemoryRepository } from '../infrastructure/task-repository'
-import { randomUUID } from 'crypto'
+import { TaskPrismaRepository } from '../infrastructure/task-repository'
+import { NotFoundError, UnprocessableEntityError } from '../../utils/errors'
 
 export class TaskService implements TaskUseCases {
-  constructor(private readonly taskRepository: TaskRepository = new TaskInMemoryRepository()) {}
+  constructor(private readonly taskRepository: TaskRepository = new TaskPrismaRepository()) {}
 
   async getTask(id: string): Promise<Task> {
     const task = await this.taskRepository.get(id)
@@ -18,13 +17,12 @@ export class TaskService implements TaskUseCases {
     return await this.taskRepository.getAll()
   }
 
-  async addNewTask(model: TaskCommand): Promise<Task> {
-    const task: Task = {
-      id: randomUUID(),
+  async addNewTask(command: TaskCommand): Promise<Task> {
+    const task: Omit<Task, 'id'> = {
       createdAt: new Date(),
       status: TaskStatus.Todo,
       userId: '1',
-      ...model,
+      ...command,
     }
 
     const newTask = await this.taskRepository.create(task)
@@ -32,8 +30,8 @@ export class TaskService implements TaskUseCases {
     return newTask
   }
 
-  async updateExistingTask(id: string, task: Task): Promise<Task> {
-    const model = await this.taskRepository.update(id, task)
+  async updateExistingTask(id: string, command: TaskCommand): Promise<Task> {
+    const model = await this.taskRepository.update(id, command as Task)
 
     if (!model) {
       throw new UnprocessableEntityError(`An error ocurred while trying to update the Task with id ${id}.`)
