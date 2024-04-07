@@ -1,5 +1,6 @@
 # Custom ignores
 .build
+.vscode
 
 # Logs
 logs
