@@ -28,7 +28,7 @@ export type TaskUpdateStatusCommand = {
 export interface TaskRepository {
   get(id: string): Promise<Task | null>
   getAll(): Promise<Task[]>
-  create(task: Task): Promise<Task>
+  create(task: Omit<Task, 'id'>): Promise<Task>
   update(id: string, task: Task): Promise<Task | null>
   delete(id: string): Promise<boolean>
 }
@@ -36,8 +36,8 @@ export interface TaskRepository {
 export interface TaskUseCases {
   getTask(id: string): Promise<Task>
   getAllTasks(): Promise<Task[]>
-  addNewTask(model: TaskCommand): Promise<Task>
-  updateExistingTask(id: string, task: TaskCommand): Promise<Task>
+  addNewTask(command: TaskCommand): Promise<Task>
+  updateExistingTask(id: string, command: TaskCommand): Promise<Task>
   updateStatus(id: string, status: TaskStatus): Promise<Task>
   deleteTask(id: string): Promise<boolean>
 }
