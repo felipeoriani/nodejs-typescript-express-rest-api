@@ -15,7 +15,8 @@
     "type-check": "yarn build --pretty --noEmit",
     "prisma:migrate": "yarn prisma migrate dev",
     "prisma:reset": "prisma migrate reset --force",
-    "prisma:seed": "ts-node scripts/seed.ts"
+    "prisma:seed": "node --env-file=.env scripts/seed.js",
+    "docker:build": "docker build -t tasks ."
   },
   "dependencies": {
     "@prisma/client": "^5.12.1",

@@ -1,10 +1,10 @@
-import { PrismaClient, TaskStatus, User } from '@prisma/client'
+import { PrismaClient, TaskStatus } from '@prisma/client'
 import { faker } from '@faker-js/faker'
 
 const prisma = new PrismaClient()
 const taskStatus = [TaskStatus.done, TaskStatus.inProgress, TaskStatus.done, TaskStatus.archived]
 
-async function getUser(username: string): Promise<User> {
+async function getUser(username) {
   const user = await prisma.user.findFirst({
     where: {
       username,
@@ -24,7 +24,7 @@ async function getUser(username: string): Promise<User> {
   })
 }
 
-async function createTask(userId: string): Promise<void> {
+async function createTask(userId) {
   const title = faker.lorem.words(3)
   const description = faker.lorem.sentence()
   const status = taskStatus[Math.floor(Math.random() * taskStatus.length)]
@@ -44,7 +44,7 @@ async function main() {
   const admin = await getUser('admin')
   const user = await getUser('user')
 
-  const tasksPromises: Promise<void>[] = []
+  const tasksPromises = []
   for (let i = 0; i < 50; i++) {
     tasksPromises.push(createTask(i % 2 === 0 ? admin.id : user.id))
   }
