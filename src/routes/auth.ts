@@ -3,6 +3,9 @@ import { UserService } from '../core/use-cases/user-use-cases.js'
 import { config } from '../utils/config.js'
 import { NextFunction, Request, Response, Router } from 'express'
 import jwt from 'jsonwebtoken'
+import { getSession } from '../utils/session.js'
+import { UnauthorizedError } from '../utils/errors.js'
+import { authenticationMiddleware } from '../middlewares/authentication.js'
 
 const routes = Router()
 
@@ -32,6 +35,22 @@ routes.post('/api/v1/auth', async (req: Request, res: Response, next: NextFuncti
     })
 
     res.status(200).send({ type: 'bearer', token })
+  } catch (err) {
+    next(err)
+  }
+})
+
+routes.get('/api/v1/user', authenticationMiddleware, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const session = getSession()
+
+    if (!session) {
+      throw new UnauthorizedError('Authentication required.')
+    }
+
+    const model = { id: session.user.id, name: session.user.name }
+
+    res.status(200).send(model)
   } catch (err) {
     next(err)
   }
