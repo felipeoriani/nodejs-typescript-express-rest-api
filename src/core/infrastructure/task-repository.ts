@@ -50,7 +50,7 @@ export class TaskPrismaRepository implements TaskRepository {
       data: {
         title: task.title,
         description: task.description,
-        status: TaskStatus.Done,
+        status: task.status,
         userId: this.session.user.id,
       },
     })
