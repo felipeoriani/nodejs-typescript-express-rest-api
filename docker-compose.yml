@@ -1,8 +1,25 @@
 version: '3.5'
 
 services:
+  api01: &api
+    image: tasks
+    hostname: api01
+    container_name: task-service-1
+    networks:
+      - default
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - JWT=7a2fad42-ff31-4e7f-9366-be2b4506fb7f
+      - DATABASE_URL=postgresql://admin:123@db:5432/tasks?schema=public
+    ports:
+      - '3001:3000'
+    depends_on:
+      - db
+
   db:
     image: postgres:16
+    hostname: db
     container_name: db
     networks:
       - default

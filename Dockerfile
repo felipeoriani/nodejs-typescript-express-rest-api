@@ -9,8 +9,10 @@ ENV NODE_ENV production
 WORKDIR /app
 
 COPY package.json yarn.lock ./
+COPY prisma ./prisma
 
 RUN yarn install --production
+
 
 # --------------------------------------------------------------------
 
@@ -19,6 +21,7 @@ FROM node:20-alpine3.18
 ENV NODE_ENV production
 ENV PORT 3000
 ENV JWT c565bc45-1818-41f3-be52-2b4d11fe959d
+ENV DATABASE_URL "postgresql://admin:123@db:5432/tasks?schema=public"
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S expressjs -u 1001
@@ -28,6 +31,8 @@ WORKDIR /app
 COPY --from=BUILD_IMAGE --chown=expressjs:nodejs /app/package.json ./
 COPY --from=BUILD_IMAGE --chown=expressjs:nodejs /app/node_modules ./node_modules
 COPY .build/src .
+
+RUN yarn prisma generate
 
 USER expressjs
 
