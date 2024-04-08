@@ -1,5 +1,9 @@
+export type Metadata = object | Error | unknown
+
 export interface AppLogger {
-  info(message: string): void
-  error(message: string): void
-  warn(message: string): void
+  debug(message: string, metadata?: object): void
+  info(message: string, metadata?: object): void
+  warn(message: string, metadata?: Metadata): void
+  error(message: string, metadata?: Metadata): void
+  fatal(message: string, metadata?: Metadata): void
 }
