@@ -5,6 +5,7 @@
   "repository": "git@github.com:felipeoriani/task-service.git",
   "author": "Felipe Oriani <felipeoriani@gmail.com>",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "yarn build && node --env-file=.env .build/src/index.js",
@@ -18,7 +19,9 @@
   },
   "dependencies": {
     "@prisma/client": "^5.12.1",
+    "apollo-server-express": "^3.13.0",
     "express": "^4.19.2",
+    "graphql": "^16.8.1",
     "joi": "^17.12.3",
     "jsonwebtoken": "^9.0.2",
     "pino": "^8.20.0",
