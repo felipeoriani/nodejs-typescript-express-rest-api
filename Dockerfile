@@ -18,6 +18,7 @@ FROM node:20-alpine3.18
 
 ENV NODE_ENV production
 ENV PORT 3000
+ENV JWT c565bc45-1818-41f3-be52-2b4d11fe959d
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S expressjs -u 1001
