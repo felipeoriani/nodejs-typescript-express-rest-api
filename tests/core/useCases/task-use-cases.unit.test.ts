@@ -2,9 +2,9 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { randomUUID } from 'node:crypto'
-import { Task, TaskCommand, TaskRepository, TaskStatus, TaskUseCases } from '../../../src/core/domain/task'
-import { TaskService } from '../../../src/core/use-cases/task-use-cases'
-import { AppError, NotFoundError, UnprocessableEntityError } from '../../../src/utils/errors'
+import { Task, TaskCommand, TaskRepository, TaskStatus, TaskUseCases } from '../../../src/core/domain/task.js'
+import { TaskService } from '../../../src/core/use-cases/task-use-cases.js'
+import { AppError, NotFoundError, UnprocessableEntityError } from '../../../src/utils/errors.js'
 import { faker } from '@faker-js/faker'
 
 describe('task use cases', () => {

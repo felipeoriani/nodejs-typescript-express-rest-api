@@ -1,5 +1,5 @@
 import { AsyncLocalStorage } from 'async_hooks'
-import { CurrentUser, UserData, UserSession } from '../core/domain/user'
+import { CurrentUser, UserData, UserSession } from '../core/domain/user.js'
 
 const asyncLocalStorage = new AsyncLocalStorage<UserSession>()
 

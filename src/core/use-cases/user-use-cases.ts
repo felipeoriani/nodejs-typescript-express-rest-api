@@ -1,6 +1,6 @@
-import { NotFoundError } from '../../utils/errors'
-import { AuthenticateUserInput, User, UserRepository, UserUseCases } from '../domain/user'
-import { UserPrismaRepository } from '../infrastructure/user-repository'
+import { NotFoundError } from '../../utils/errors.js'
+import { AuthenticateUserInput, User, UserRepository, UserUseCases } from '../domain/user.js'
+import { UserPrismaRepository } from '../infrastructure/user-repository.js'
 
 export class UserService implements UserUseCases {
   constructor(private readonly userRepository: UserRepository = new UserPrismaRepository()) {}

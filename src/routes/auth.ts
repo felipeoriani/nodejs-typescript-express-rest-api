@@ -1,6 +1,6 @@
-import { AuthenticateUserInput, UserSession, UserUseCases } from '../core/domain/user'
-import { UserService } from '../core/use-cases/user-use-cases'
-import { config } from '../utils/config'
+import { AuthenticateUserInput, UserSession, UserUseCases } from '../core/domain/user.js'
+import { UserService } from '../core/use-cases/user-use-cases.js'
+import { config } from '../utils/config.js'
 import { NextFunction, Request, Response, Router } from 'express'
 import jwt from 'jsonwebtoken'
 

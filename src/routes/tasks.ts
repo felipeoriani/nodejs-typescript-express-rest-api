@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response, Router } from 'express'
-import { TaskService } from '../core/use-cases/task-use-cases'
+import { TaskService } from '../core/use-cases/task-use-cases.js'
 import {
   TaskCommand,
   TaskUpdateStatusCommand,
   TaskUseCases,
   taskCommandValidator,
   updateStatusValidator,
-} from '../core/domain/task'
-import { authenticationMiddleware, validatorMiddleware } from '../middlewares'
+} from '../core/domain/task.js'
+import { authenticationMiddleware, validatorMiddleware } from '../middlewares/index.js'
 
 const routes = Router()
 

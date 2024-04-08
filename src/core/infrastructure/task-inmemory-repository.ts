@@ -1,4 +1,4 @@
-import { Task, TaskRepository } from '../domain/task'
+import { Task, TaskRepository } from '../domain/task.js'
 
 export class TaskInMemoryRepository implements TaskRepository {
   static tasks: Task[] = []

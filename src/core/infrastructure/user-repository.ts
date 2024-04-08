@@ -1,6 +1,6 @@
-import { User, UserRepository } from '../domain/user'
+import { User, UserRepository } from '../domain/user.js'
 import { User as UserDb } from '@prisma/client'
-import { getDbClient } from './db/prisma'
+import { getDbClient } from './db/prisma.js'
 
 export class UserPrismaRepository implements UserRepository {
   constructor(private readonly prismaClient = getDbClient()) {}

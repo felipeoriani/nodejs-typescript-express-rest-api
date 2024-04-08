@@ -1,6 +1,6 @@
 import joi from 'joi'
 import { NextFunction, Request, Response } from 'express'
-import { BadRequestError } from '../utils/errors'
+import { BadRequestError } from '../utils/errors.js'
 
 export const validatorMiddleware = <T>(validator: joi.Schema<T>) => {
   return (req: Request, res: Response, next: NextFunction) => {

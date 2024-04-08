@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
-import { UserSession } from '../core/domain/user'
-import { config } from '../utils/config'
-import { AppError, UnauthorizedError } from '../utils/errors'
-import { setSession } from '../utils/session'
+import { UserSession } from '../core/domain/user.js'
+import { config } from '../utils/config.js'
+import { AppError, UnauthorizedError } from '../utils/errors.js'
+import { setSession } from '../utils/session.js'
 
 async function validate(token: string): Promise<UserSession | jwt.VerifyErrors | null> {
   return new Promise((resolve, reject) => {

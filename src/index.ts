@@ -1,11 +1,13 @@
 import express from 'express'
-import routes from './routes'
-import { logger } from './core/infrastructure/logger'
-import { loggerMiddleware, errorMiddleware } from './middlewares'
-import { config } from './utils/config'
+import { errorMiddleware, loggerMiddleware } from './middlewares/index.js'
+import routes from './routes/index.js'
+import { config } from './utils/config.js'
+import { graphqlMiddleware } from './middlewares/graphql.js'
 
 const port = config.port
 const app = express()
+
+await graphqlMiddleware(app)
 
 app.use(loggerMiddleware())
 app.use(express.json())
@@ -13,5 +15,5 @@ app.use(routes)
 app.use(errorMiddleware)
 
 app.listen(port, () => {
-  logger.info(`The Task Service has started running at ${config.host}:${port} in ${config.nodeEnv} mode.`)
+  console.log(`The Task Service has started running at ${config.host}:${port} in ${config.nodeEnv} mode.`)
 })

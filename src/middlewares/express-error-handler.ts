@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { AppError } from '../utils/errors'
-import { logger } from '../core/infrastructure/logger'
+import { AppError } from '../utils/errors.js'
 
 export const errorMiddleware = (error: Error, request: Request, response: Response, next: NextFunction) => {
   if (response.headersSent) {
@@ -12,6 +11,6 @@ export const errorMiddleware = (error: Error, request: Request, response: Respon
     return
   }
 
-  logger.error(`An error ocurred while trying to execute ${request.method} - ${request.url}.`, error)
+  console.error(`An error ocurred while trying to execute ${request.method} - ${request.url}.`, error)
   response.status(500).send(error)
 }

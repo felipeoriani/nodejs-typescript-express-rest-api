@@ -1,6 +1,6 @@
-import { TaskCommand, Task, TaskRepository, TaskStatus, TaskUseCases } from '../domain/task'
-import { TaskPrismaRepository } from '../infrastructure/task-repository'
-import { NotFoundError, UnprocessableEntityError } from '../../utils/errors'
+import { TaskCommand, Task, TaskRepository, TaskStatus, TaskUseCases } from '../domain/task.js'
+import { TaskPrismaRepository } from '../infrastructure/task-repository.js'
+import { NotFoundError, UnprocessableEntityError } from '../../utils/errors.js'
 
 export class TaskService implements TaskUseCases {
   constructor(private readonly taskRepository: TaskRepository = new TaskPrismaRepository()) {}
@@ -31,13 +31,24 @@ export class TaskService implements TaskUseCases {
   }
 
   async updateExistingTask(id: string, command: TaskCommand): Promise<Task> {
-    const model = await this.taskRepository.update(id, command as Task)
+    const currentTask = await this.taskRepository.get(id)
+    if (!currentTask) {
+      throw new NotFoundError(`There is no Task available for id ${id}.`)
+    }
 
-    if (!model) {
+    if (currentTask.status === TaskStatus.Archived) {
+      throw new UnprocessableEntityError(`It is not possible to change the information on a Task on 'Archived' status.`)
+    }
+
+    currentTask.title = command.title
+    currentTask.description = command.description
+    const updatedTask = await this.taskRepository.update(id, currentTask)
+
+    if (!updatedTask) {
       throw new UnprocessableEntityError(`An error ocurred while trying to update the Task with id ${id}.`)
     }
 
-    return model
+    return updatedTask
   }
 
   async updateStatus(id: string, status: TaskStatus): Promise<Task> {

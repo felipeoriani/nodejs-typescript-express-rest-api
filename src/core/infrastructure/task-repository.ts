@@ -1,8 +1,8 @@
 import { Task as TaskDb } from '@prisma/client'
-import { Task, TaskStatus, TaskRepository } from '../domain/task'
-import { getDbClient } from './db/prisma'
-import { CurrentUser } from '../domain/user'
-import { CurrentSession } from '../../utils/session'
+import { Task, TaskStatus, TaskRepository } from '../domain/task.js'
+import { getDbClient } from './db/prisma.js'
+import { CurrentUser } from '../domain/user.js'
+import { CurrentSession } from '../../utils/session.js'
 
 export class TaskPrismaRepository implements TaskRepository {
   constructor(
