@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   api01: &api
-    image: tasks
+    image: felipeoriani/tasks-api-nodejs-typescript
     hostname: api01
     container_name: task-api-1
     networks:
