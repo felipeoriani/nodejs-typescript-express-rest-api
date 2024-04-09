@@ -1,4 +1,4 @@
-# task-service
+# Task Service
 
 Task Service is a sample application used to handle Tasks by User. The base structure of a `Task` is:
 
@@ -15,9 +15,9 @@ Task Service is a sample application used to handle Tasks by User. The base stru
 
 The REST API / GraphQL API is protected by user authentication using a `bearer` token (JWT). Before consuming it, you must first authenticate using the `POST /api/v1/auth` endpoint passing the user credentials and a token will be generated. Use it on the `authorization` http request header attribute. Use POSTMAN collection available on the docs folder.
 
-**Important**: There is 2 types of user. A `super` user that can handle all the tasks and a `non-super` user which can only handle its own tasks. You may get some `401` or `403` errors if you try to acccess wrong IDs.
+⚠️ **Important**: There is 2 types of user. A `super` user that can handle all the tasks and a `non-super` user which can only handle its own tasks. You may get some `401` or `403` errors if you try to acccess wrong IDs.
 
-## Stack
+## 💻 Stack
 
 The following list represents the main stack and its dependencies:
 
@@ -32,13 +32,13 @@ The following list represents the main stack and its dependencies:
 - jsonwebtoken
 - pino (logging)
 
-## Architecture
+## 🥇 Architecture
 
 The design was made on the top of `Clean Architecture`, where there are well-separated layers for `Domain` which holds all the abstractions for the domain of the application (Tasks and Users), `Infrastructure` (I/O bound operations) and `UseCases` (business rules). The components of each layer depends on the abstractions of the domain which allows us to inject any derived instance for the abstractions and mock at unit testing level.
 
 ![Postman collection](docs/project-structure.png)
 
-## Scalability
+## ☁️ Scalability
 
 To emulate the scalability, you can run it on your machine:
 
@@ -58,25 +58,27 @@ yarn prisma:reset
 
 To migrate and seed the database. Then you can load the postman collection available on the `docs` folder and use it.
 
-Once you are done, just destroy the environment:
+Once it is up, the endpoint to consume the api via load balancer is: `http://localhost:4000`.
+
+Finally when you are done, just destroy the environment:
 
 ```
 docker compose -f docker-compose-test.yml down
 ```
 
-## Tests
+## ✔️ Tests
 
 It uses the native Node Test Runner as tooling for testing. The tests covers the use cases layer mocks are created using objects and injected on the useCases, specially the `TaskUseCases`.
 
 ![Postman collection](docs/test-results.png)
 
-## CI/CD
+## 📊 CI/CD
 
 There is a initial workflow on the `./github/workflows` folder that run a few steps to check the project source code including lint, typescript, build (transpilation process of typescript) and tests.
 
 You can see the workflow results at `Actions` tab here: https://github.com/felipeoriani/task-service/actions
 
-## Improvements
+## 📓 Improvements
 
 - Implement integration tests to cover the infrastructure layer and api layer;
 - Custom error messages for schema validators, maybe considering globalization;
