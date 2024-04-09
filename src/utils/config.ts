@@ -22,7 +22,6 @@ export const config = {
   isTest: nodeEnv === NodeEnv.Test,
   host: os.hostname(),
   port: getEnvironmentVariable<number>('PORT') || 3000,
-  salt: getEnvironmentVariable<string>('SALT'),
   tokenSecret: getEnvironmentVariable<string>('JWT'),
   tokenExpiration: '1d',
 }
