@@ -43,10 +43,24 @@ There is a `Dockerfile` and `docker-compose.yml` file in the root of the repo th
 To emulate the scalability, you can run it on your machine:
 
 ```
-docker-compose -f docker-compose-test.yml up
+docker-compose -f docker-compose-test.yml up -d
 ```
 
-It will up database, two instances of the container and a `nginx` as a load balancer which will distribute the requests across the containers emulating a situation where we have more than a single instance running for the application.
+It will up database, two instances of the container and a `nginx` as a load balancer which will distribute the requests across the containers emulating a situation where we have more than a single instance running for the application. The image for the app container is ready and published on docker hub. You can check it here: https://hub.docker.com/r/felipeoriani/tasks-api-nodejs-typescript
+
+But from this repository you will need to run:
+
+```
+yarn prisma:reset
+```
+
+To migrate and seed the database. Then you can load the postman collection available on the `docs` folder and use it.
+
+Once you are done, just destroy the environment:
+
+```
+docker compose -f docker-compose-test.yml down
+```
 
 ## Tests
 
