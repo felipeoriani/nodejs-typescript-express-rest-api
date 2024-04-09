@@ -1,0 +1,505 @@
+{
+	"info": {
+		"_postman_id": "a30d73e7-d5ff-4659-8c64-292403aa67fd",
+		"name": "Tasks",
+		"description": "The Task Service exposes a REST API. Before running the requests, make sure you have the correct endpoint set on `{{host}}` variable. Then, you must to authenticate using one of the authentication POST methods and it will automatically use variables to set the generated token. Then you can run the endpoints for tasks.\n\nThere is a GraphQL endpoint at `POST /graphql` avaiable to get tasks.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2302211"
+	},
+	"item": [
+		{
+			"name": "tasks",
+			"item": [
+				{
+					"name": "/tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/tasks",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tasks/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/tasks/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tasks",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{task_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+									"});\r",
+									"let response = pm.response.json();\r",
+									"pm.collectionVariables.set(\"task_id\", response.id);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"{{$randomBs}}\",\r\n    \"description\": \"{{$randomCatchPhrase}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/tasks",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tasks/:id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"{{$randomBs}}\",\r\n    \"description\": \"{{$randomCatchPhrase}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/tasks/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tasks",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{task_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tasks/:id/status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": \"done\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/tasks/:id/status",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tasks",
+								":id",
+								"status"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{task_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/tasks/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/tasks/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tasks",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{task_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "graphQL",
+			"item": [
+				{
+					"name": "/graphql - All Tasks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n  tasks {\r\n    id,\r\n    title,\r\n    description,\r\n    status,\r\n    userId,\r\n    createdAt\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/graphql",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/graphql - Task by Id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ($taskId: ID!) {\r\n  task(id: $taskId) {\r\n    id,\r\n    title,\r\n    description,\r\n    status,\r\n    createdAt\r\n  }\r\n}\r\n",
+								"variables": "{\r\n    \"taskId\": \"{{task_id}}\"\r\n}"
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/graphql",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/graphql - Task by Status",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ($status: TaskStatus!) {\r\n  tasksByStatus(status: $status) {\r\n    id,\r\n    title,\r\n    description,\r\n    status,\r\n    userId,\r\n    createdAt\r\n  }\r\n}\r\n",
+								"variables": "{\r\n    \"status\": \"done\"\r\n}"
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v1/graphql",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Authenticate as an Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							"let response = pm.response.json();\r",
+							"pm.collectionVariables.set(\"token\", response.token);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/auth",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authenticate as a User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							"let response = pm.response.json();\r",
+							"pm.collectionVariables.set(\"token\", response.token);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"user\",\r\n    \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/auth",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/v1/user",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:4000",
+			"type": "string"
+		},
+		{
+			"key": "task_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
