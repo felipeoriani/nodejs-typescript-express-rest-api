@@ -85,6 +85,8 @@ You can see the workflow results at `Actions` tab here: https://github.com/felip
 - GraphQL configurations, it was my first time dealing with it, I would investigate how to implement the `Mutation` and maybe consider it just a GraphQL API instead of a Mix of REST and GraphQL.
 - Improve the test coverage, currently using the `c8` package since node test runner is not able yet (hope in node 22 it will);
 - Improve the route configuration on the API level with the express framework;
+- Configure CORS properly;
+- Configure Rate limiting on the API / Cloud service infrastructure;
 - Move environment variables to AWS Secrets Manager and adapt the application to read from there;
 - Deploy at AWS ECS (Fargate - serverless) and configure the Task Definitions properly to run the container;
 - Use AWS RDS (Aurora) to run the PostgreSQL database;
