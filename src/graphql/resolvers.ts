@@ -1,25 +1,27 @@
-import { getDbClient } from '../core/infrastructure/db/prisma.js'
-import { UnauthorizedError } from '../utils/errors.js'
-import { getSession } from '../utils/session.js'
+import { TaskStatus } from '../core/domain/task.js'
+import { TaskService } from '../core/use-cases/task-use-cases.js'
+
+const taskServiceFactory = () => new TaskService()
 
 export const resolvers = {
   Query: {
-    tasks: () => {
-      const session = getSession()!
+    /**
+     * Return a list of tasks that the user can see.
+     * @returns List of Tasks
+     */
+    tasks: () => taskServiceFactory().getAllTasks(),
 
-      if (!session) {
-        throw new UnauthorizedError('Authentication required')
-      }
+    /**
+     * Get a Task by Id, since it belongs to the user or it is a super user.
+     * @returns A single task instance by the given Id.
+     */
+    task: async (_parent: unknown, { id }: { id: string }) => await taskServiceFactory().getTask(id),
 
-      if (session.user.super) {
-        return getDbClient().task.findMany()
-      }
-
-      return getDbClient().task.findMany({
-        where: {
-          userId: session.user.id,
-        },
-      })
-    },
+    /**
+     * List of tasks by the status given the user permission.
+     * @returns
+     */
+    tasksByStatus: async (_parent: unknown, { status }: { status: TaskStatus }) =>
+      await taskServiceFactory().getTasksByStatus(status),
   },
 }

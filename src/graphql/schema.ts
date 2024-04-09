@@ -1,12 +1,14 @@
 import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
+  scalar DateTime
+
   type Task {
-    id: String!
+    id: ID!
     title: String!
     description: String!
     status: TaskStatus!
-    createdAt: String
+    createdAt: DateTime!
     userId: String!
   }
 
@@ -19,5 +21,7 @@ export const typeDefs = gql`
 
   type Query {
     tasks: [Task]!
+    task(id: ID!): Task
+    tasksByStatus(status: TaskStatus!): [Task]!
   }
 `
