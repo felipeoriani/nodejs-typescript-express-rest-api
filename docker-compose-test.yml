@@ -4,7 +4,7 @@ services:
   api01: &api
     image: tasks
     hostname: api01
-    container_name: task-service-1
+    container_name: task-api-1
     networks:
       - default
     environment:
@@ -20,7 +20,7 @@ services:
   api02:
     <<: *api
     hostname: api02
-    container_name: task-service-2
+    container_name: task-api-2
     ports:
       - '3002:3000'
 
