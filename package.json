@@ -17,7 +17,7 @@
     "prisma:migrate": "yarn prisma migrate dev",
     "prisma:reset": "prisma migrate reset --force && yarn prisma:seed",
     "prisma:seed": "node --env-file=.env scripts/seed.js",
-    "docker:build": "docker build -t tasks ."
+    "docker:build": "docker buildx build --platform linux/amd64 -t tasks-api-nodejs-typescript ."
   },
   "dependencies": {
     "@prisma/client": "^5.12.1",
