@@ -1,6 +1,6 @@
 # task-service
 
-Task Service is a sample application used to handle tasks by User. The base structure of a `Task` is:
+Task Service is a sample application used to handle Tasks by User. The base structure of a `Task` is:
 
 ```typescript
 {
@@ -34,9 +34,9 @@ The following list represents the main stack and its dependencies:
 
 ## Architecture
 
-The design was made on the top of `Clean Architecture`, where there are well-separated layers for `Domain` which holds all the abstractions for the domain of the application (Tasks and Users), `Infrastructure` (I/O bound operations) and UseCases (business rules). The components of each layer depends on the abstractions of the domain, and the concrete types are injected as optional parameters (no DI container here), easy to mock on the tests.
+The design was made on the top of `Clean Architecture`, where there are well-separated layers for `Domain` which holds all the abstractions for the domain of the application (Tasks and Users), `Infrastructure` (I/O bound operations) and `UseCases` (business rules). The components of each layer depends on the abstractions of the domain which allows us to inject any derived instance for the abstractions and mock at unit testing level.
 
-There is a `Dockerfile` and `docker-compose.yml` file in the root of the repo that build the project in a container.
+![Postman collection](docs/project-structure.png)
 
 ## Scalability
 
@@ -46,7 +46,9 @@ To emulate the scalability, you can run it on your machine:
 docker-compose -f docker-compose-test.yml up -d
 ```
 
-It will up database, two instances of the container and a `nginx` as a load balancer which will distribute the requests across the containers emulating a situation where we have more than a single instance running for the application. The image for the app container is ready and published on docker hub. You can check it here: https://hub.docker.com/r/felipeoriani/tasks-api-nodejs-typescript
+It will up database, two instances of the container app and a `nginx` as a load balancer which will distribute the requests across the containers emulating a situation where we have more than a single instance running for the application. The image for the container app is ready and published on docker hub, you can check it here: https://hub.docker.com/r/felipeoriani/tasks-api-nodejs-typescript
+
+You also can see how the image was build at `Dockerfile`.
 
 But from this repository you will need to run:
 
@@ -66,9 +68,13 @@ docker compose -f docker-compose-test.yml down
 
 It uses the native Node Test Runner as tooling for testing. The tests covers the use cases layer mocks are created using objects and injected on the useCases, specially the `TaskUseCases`.
 
+![Postman collection](docs/test-results.png)
+
 ## CI/CD
 
 There is a initial workflow on the `./github/workflows` folder that run a few steps to check the project source code including lint, typescript, build (transpilation process of typescript) and tests.
+
+You can see the workflow results at `Actions` tab here: https://github.com/felipeoriani/task-service/actions
 
 ## Improvements
 
@@ -77,10 +83,17 @@ There is a initial workflow on the `./github/workflows` folder that run a few st
 - Implement hashing strategy for user password (security issue);
 - Standardize the http response messages using the Problem Details;
 - GraphQL configurations, it was my first time dealing with it, I would investigate how to implement the `Mutation` and maybe consider it just a GraphQL API instead of a Mix of REST and GraphQL.
-- Improve the test coverage, currently using the `c8` package since node test runner is not stable (hope in node 22 it will);
-- Improve the route configuration on the API level within the express framework;
+- Improve the test coverage, currently using the `c8` package since node test runner is not able yet (hope in node 22 it will);
+- Improve the route configuration on the API level with the express framework;
+- Move environment variables to AWS Secrets Manager and adapt the application to read from there;
+- Deploy at AWS ECS (Fargate - serverless) and configure the Task Definitions properly to run the container;
+- Use AWS RDS (Aurora) to run the PostgreSQL database;
+- Use AWS Elasticache (Redis) to implement some caching strategy;
+- Use IaC tool (Terraform or AWS Cloud Formation) to provision the infrastructure and automate it for dev/staging/prod;
 
 ## Endpoints
+
+![Postman collection](docs/postman-collection.png)
 
 <table>
     <tr>
