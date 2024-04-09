@@ -1,0 +1,53 @@
+version: '3.5'
+
+services:
+  api01: &api
+    image: tasks
+    hostname: api01
+    container_name: task-service-1
+    networks:
+      - default
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - JWT=7a2fad42-ff31-4e7f-9366-be2b4506fb7f
+      - DATABASE_URL=postgresql://admin:123@db:5432/tasks?schema=public
+    ports:
+      - '3001:3000'
+    depends_on:
+      - db
+
+  api02:
+    <<: *api
+    hostname: api02
+    container_name: task-service-2
+    ports:
+      - '3002:3000'
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api01
+      - api02
+    ports:
+      - '4000:4000'
+
+  db:
+    image: postgres:16
+    hostname: db
+    container_name: db
+    networks:
+      - default
+    environment:
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=tasks
+    ports:
+      - '5432:5432'
+
+networks:
+  default:
+    driver: bridge
+    name: task-service-test-network
