@@ -80,20 +80,23 @@ You can see the workflow results at `Actions` tab here: https://github.com/felip
 
 ## 📓 Improvements
 
+There are space for improvements in this project considering coding, architecture, deployment, automation:
+
 - Implement integration tests to cover the infrastructure layer and api layer;
 - Custom error messages for schema validators, maybe considering globalization;
 - Implement hashing strategy for user password (security issue);
 - Standardize the http response messages using the Problem Details;
-- GraphQL configurations, it was my first time dealing with it, I would investigate how to implement the `Mutation` and maybe consider it just a GraphQL API instead of a Mix of REST and GraphQL.
+- GraphQL configurations, it was my first time dealing with it, I would investigate how to implement the `Mutation` and maybe consider it just a GraphQL API instead of a Mix of REST and GraphQL;
 - Improve the test coverage, currently using the `c8` package since node test runner is not able yet (hope in node 22 it will);
 - Improve the route configuration on the API level with the express framework;
 - Configure CORS properly;
 - Configure Rate limiting on the API / Cloud service infrastructure;
 - Move environment variables to AWS Secrets Manager and adapt the application to read from there;
-- Deploy at AWS ECS (Fargate - serverless) and configure the Task Definitions properly to run the container;
+- Deploy at AWS ECS (Fargate - serverless) and configure the Task Definitions properly to run and scale the container;
 - Use AWS RDS (Aurora) to run the PostgreSQL database;
 - Use AWS Elasticache (Redis) to implement some caching strategy;
 - Use IaC tool (Terraform or AWS Cloud Formation) to provision the infrastructure and automate it for dev/staging/prod;
+- Improve the CI/CD workflows with Github Actions to deploy it into a Cloud Service (currently just doing the basics with CI).
 
 ## Endpoints
 
