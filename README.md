@@ -48,6 +48,18 @@ docker-compose -f docker-compose-test.yml up -d
 
 It will up database, two instances of the container app and a `nginx` as a load balancer which will distribute the requests across the containers emulating a situation where we have more than a single instance running for the application. The image for the container app is ready and published on docker hub, you can check it here: https://hub.docker.com/r/felipeoriani/tasks-api-nodejs-typescript
 
+
+```mermaid
+flowchart TD
+    G(Client) -.loadBalancer:4000.-> LB(Nginx Load Balancer)
+    subgraph Backend App
+        LB -.api01:3000.-> API1(NodeJs API - instance 01)
+        LB -.api02:3000.-> API2(NodeJs API - instance 02)
+        API1 -.-> Db[(PostgreSql Database)]
+        API2 -.-> Db[(PostgreSql Database)]
+    end
+```
+
 You also can see how the image was build at `Dockerfile`.
 
 But from this repository you will need to run:
