@@ -1,6 +1,8 @@
 # Task Service
 
-Task Service is a sample application used to handle Tasks by User. The base structure of a `Task` is:
+Task Service is a sample application used to handle Tasks by User. The goal here is to show in a simple project how I enjoy desigin and implementing the solutions I have creates after a few yeras of experience working with NodeJs. I am always open mind to change it since there is no silver bullet from my perspective.
+
+The base structure of a `Task` is:
 
 ```typescript
 {
@@ -16,6 +18,20 @@ Task Service is a sample application used to handle Tasks by User. The base stru
 The REST API / GraphQL API is protected by user authentication using a `bearer` token (JWT). Before consuming it, you must first authenticate using the `POST /api/v1/auth` endpoint passing the user credentials and a token will be generated. Use it on the `authorization` http request header attribute. Use POSTMAN collection available on the docs folder.
 
 ⚠️ **Important**: There is 2 types of user. A `super` user that can handle all the tasks and a `non-super` user which can only handle its own tasks. You may get some `401` or `403` errors if you try to acccess wrong IDs.
+
+Here is a structure of a `User`:
+
+```typescript
+{
+  id: string
+  name: string
+  username: string
+  password: string
+  email: string
+  createdAt: Date
+  super: boolean
+}
+```
 
 ## 💻 Stack
 
@@ -47,7 +63,6 @@ docker-compose -f docker-compose-test.yml up -d
 ```
 
 It will up database, two instances of the container app and a `nginx` as a load balancer which will distribute the requests across the containers emulating a situation where we have more than a single instance running for the application. The image for the container app is ready and published on docker hub, you can check it here: https://hub.docker.com/r/felipeoriani/tasks-api-nodejs-typescript
-
 
 ```mermaid
 flowchart TD
