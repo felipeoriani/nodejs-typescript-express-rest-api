@@ -5,10 +5,10 @@ import { CurrentUser } from '../domain/user.js'
 import { TaskPrismaRepository } from '../infrastructure/task-repository.js'
 
 /**
- * The `TaskService` is a service that is responsable to manage all the `Task` entities on the platform.
+ * The `TaskService` is a service that implements the `TaskUseCases` which is responsable to manage all the `Task` entities on the platform.
  * This service depends on an abstract `repository` and a user `session` representation.
  * Each Task has a owner defined by the `userId` property which limits the access to all the users.
- * A Task can be handled only by the user owner or admin user.
+ * A Task can be handled only by the user owner or a super user.
  */
 export class TaskService implements TaskUseCases {
   /**
