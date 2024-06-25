@@ -26,8 +26,6 @@ jobs:
         run: yarn type-check
       - name: Lint
         run: yarn lint
-      - name: Build
-        run: yarn build
       - name: Test
         run: yarn test
 
@@ -54,5 +52,4 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           mask-aws-account-id: true
-      - name: Use AWS CLI
-        run: aws s3 ls
+# continue with IaC + Deploy app
