@@ -1,6 +1,6 @@
 # Task Service
 
-Task Service is a sample application used to handle Tasks by User. The goal here is to show in a simple project how I enjoy desigin and implementing the solutions I have creates after a few yeras of experience working with NodeJs. I am always open mind to change it since there is no silver bullet from my perspective.
+Task Service is a sample application used to handle Tasks by User. The goal here is to show in a simple project how I enjoy designing and implementing the software solutions I have creates after years of experience working as Software Engineer (since 2004) specially with NodeJs. I am always open mind to change it since there is no silver bullet to build software from my perspective.
 
 The base structure of a `Task` is:
 
@@ -17,7 +17,7 @@ The base structure of a `Task` is:
 
 The REST API / GraphQL API is protected by user authentication using a `bearer` token (JWT). Before consuming it, you must first authenticate using the `POST /api/v1/auth` endpoint passing the user credentials and a token will be generated. Use it on the `authorization` http request header attribute. Use POSTMAN collection available on the docs folder.
 
-⚠️ **Important**: There is 2 types of user. A `super` user that can handle all the tasks and a `non-super` user which can only handle its own tasks. You may get some `401` or `403` errors if you try to acccess wrong IDs.
+⚠️ **Important**: In this project, there are two types of user. A `super` user that can handle all the tasks and a `non-super` user which can only handle its own tasks. You may get some `401` or `403` errors if a `non-super` user tried to acccess not allowed tasks.
 
 Here is a structure of a `User`:
 
